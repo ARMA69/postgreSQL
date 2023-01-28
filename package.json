@@ -1,0 +1,15 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "privat": "true",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.9.0"
+  }
+}
