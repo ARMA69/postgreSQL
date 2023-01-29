@@ -3,6 +3,8 @@ INSERT INTO users (fist_name, last_name, email, is_subscribe) VALUES
 
 
 DELETE FROM users WHERE id >= 25;    
+DELETE FROM products;   
+DELETE FROM orders_to_products; 
 
 
 
