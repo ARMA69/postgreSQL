@@ -15,7 +15,31 @@ SELECT * FROM users LIMIT 10 OFFSET 10;
 
 ---------------------
 
+SELECT id, fist_name || ' ' || last_name AS "full name" FROM users;
+SELECT id, concat(fist_name, ' ', last_name ) AS " full name" FROM users;
+SELECT id, concat(fist_name, ' ', last_name) AS "full name"  FROM users WHERE char_length(concat(fist_name, ' ', last_name)) >15;
+SELECT * FROM (
+    SELECT id, concat(fist_name, ' ', last_name) AS "full name"
+    FROM users
+) AS "FN" WHERE char_length(concat("FN"."full name")) >15;
 
+------
+   Aggre
+SELECT max(weight) FROM users;
+SELECT min(weight) FROM users; 
+SELECT sum(weight) FROM users; 
+SELECT avg(weight) FROM users;
+SELECT count(fist_name) FROM users;
+SELECT gender, avg(weight) FROM users GROUP BY gender;
+SELECT avg(weight) FROM users WHERE extract('years' from birthday) > 1960;
+SELECT avg(weight) FROM users WHERE extract('years' from age(birthday)) =27 AND gender ='male';
+SELECT avg(extract('years' from age(birthday))) FROM users;
+SELECT min(extract('years' from age(birthday))), max(extract('years' from age(birthday))) FROM users;
+SELECT gender, min(extract('years' from age(birthday))), max(extract('years' from age(birthday))) FROM users GROUP BY gender;;
+SELECT gender, count(id) FROM users GROUP BY gender;
+
+--------------------
+   
 
 INSERT INTO users (fist_name, last_name, email, is_subscribe) VALUES
     ('Sron', 'Man', 'Sonystark@mail.com', true);
