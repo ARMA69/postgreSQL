@@ -1,3 +1,22 @@
+----------------------------
+
+ Alias
+
+SELECT fist_name AS "Им'я", last_name AS "Фамилия", id AS "Номер" FROM users;
+
+SELECT *, extract('years' from age(birthday)) AS "Возраст" from users WHERE extract('years' from age(birthday)) BETWEEN 20 AND 40;
+
+SELECT * FROM orders_to_products AS "Чек";
+SELECT * FROM users;
+---------------------------
+
+Pagination
+SELECT * FROM users LIMIT 10 OFFSET 10;
+
+---------------------
+
+
+
 INSERT INTO users (fist_name, last_name, email, is_subscribe) VALUES
     ('Sron', 'Man', 'Sonystark@mail.com', true);
 
@@ -5,10 +24,43 @@ INSERT INTO users (fist_name, last_name, email, is_subscribe) VALUES
 DELETE FROM users WHERE id >= 25;    
 DELETE FROM products;   
 DELETE FROM orders_to_products; 
-
-
-
+SELECT id, fist_name FROM users WHERE id < 50;
+SELECT id, fist_name from users;
+SELECT fist_name, is_subscribe from users WHERE is_subscribe = false;
+SELECT * from users WHERE is_subscribe = true
+SELECT * from users WHERE id % 2 = 0 ;
+SELECT * FROM users WHERE height >= 1.5
+SELECT * FROM users WHERE gender ='male' AND is_subscribe = true
+SELECT * FROM users WHERE id > 850 AND id < 900;
+SELECT * FROM users WHERE fist_name LIKE 'A%' AND '%b'; 
 DROP TABLE orders_to_products;
+ALTER TABLE users ADD COLUMN weight int CHECK(weight !=0  AND weight>0);
+
+SELECT id, fist_name, last_name, birthday, extract("years" from age(birthday)) FROM users WHERE id = 6;
+
+UPDATE users SET weight =60 ;
+UPDATE users SET weight = 70 WHERE id BETWEEN 1 AND 1000 RETURNING *;
+
+UPDATE emplouees SET salary * 1.2 WHERE  work_hours > 150 RETURNING *;
+
+---------------
+
+SELECT fist_name, last_name, gender, extract('years' FROM age(birthday)) FROM users WHERE gender = 'male' AND extract('years' FROM age(birthday)) >=18;
+
+SELECT * FROM users WHERE gender = 'female' AND fist_name LIKE 'A%';
+
+SELECT fist_name, last_name, birthday, extract('years' from age(birthday)) FROM users WHERE extract('years' FROM age(birthday)) BETWEEN 20 AND 40;
+
+SELECT * FROM users WHERE extract('month' from birthday) = 9;
+
+SELECT * FROM users WHERE extract('month' from birthday) = 11 AND extract('day' FROM birthday) = 1;
+UPDATE users SET is_subscribe = true WHERE extract('month' from birthday) = 11 AND extract('day' FROM birthday) = 1; 
+
+DELETE FROM users WHERE extract('years' from age(birthday)) > 65;
+SELECT fist_name, last_name, gender, extract('years' FROM age(birthday)) WHERE extract('years' FROM age(birthday)) > 65;
+
+UPDATE users SET weight =  80 WHERE gender = 'male' AND  extract('years' FROM age(birthday)) BETWEEN 40 AND 50 RETURNING *;
+-----------------------------
 
 DROP TABLE orders;
 
