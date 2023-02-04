@@ -1,5 +1,138 @@
+            04.02.2023
+             ----1NF
+CREATE TABLE employees(
+    id serial PRIMARY KEY,
+    name varchar(200),
+    department varchar(300),
+    position varchar(300),
+    car_aviability boolean
+);
+ INSERT INTO employees(name,position,car_aviability) VALUES
+  ('John', 'HR', false),
+  ('Alex', 'Saler', true),
+  ('Andrey', 'Full stack JS developer', false),
+  ('Sony', 'HR', true),
+  ('Mario', 'Game dev', false);
+
+     -----2NF
+   
+ CREATE TABLE position (
+    name varchar(300) PRIMARY KEY,
+    department varchar,
+    car_aviability boolean
+ );
+
+  DROP TABLE employees; 
+
+CREATE TABLE employees (
+    id serial PRIMARY KEY,
+    name varchar(200),
+    position varchar(300) REFERENCES position(name)
+);
+
+INSERT INTO position(name, car_aviability) VALUES
+ ('HR', false), ('Sales', false), ('Top managment driver', true);
+
+ INSERT INTO employees (name, position) VALUES
+  ('Alex', 'HR'), ('Mario', 'Sales'), ('Solo', 'Top managment driver');
+
+  SELECT * FROM employees
+  JOIN position ON employees.position = position.name;
+
+
+  --------------------3NF
+DROP TABLE employees;
+DROP TABLE positions;
+
+
+CREATE TABLE employees(
+    id serial PRIMARY KEY,
+    name varchar(200),
+    department varchar(300),
+    department_phone varchar(15)
+);
+
+
+INSERT INTO employees (name, department, department_phone) VALUES
+('John Doe', 'HR', '24-12-16'),
+('Jane Doe', 'Sales', '23-23-23'),
+('Carl Moe', 'Clojure Developer', '20-19-21');
+
+CREATE TABLE departments (
+    name varchar(200) PRIMARY KEY,
+    phone_number varchar(15)
+);
+
+INSERT INTO departments VALUES
+('HR', '24-12-16'),
+('Sales', '23-23-23'),
+('Clojure Developer', '20-19-21');
+
+
+DROP COLUMN department_phone;
+
+ALTER TABLE employees ADD FOREIGN KEY (department) REFERENCES departments(name);
+
+
+------------------------------
+            02.02.2023
+ Sorting
+ ASC -  less
+ DESC -  more
+
+SELECT * FROM users ORDER BY birthday ASC;
+
+UPDATE users SET birthday = '1940-05-12' WHERE id BETWEEN 5 AND 10
+
+SELECT fist_name, extract('years' from age(birthday)) FROM users ORDER BY extract('years' from age(birthday))
+SELECT * FROM(
+    SELECT *, extract('years' from age(birthday)) AS age
+    FROM users
+) AS "u_w_age"
+ORDER BY "u_w_age".age
+
+SELECT * FROM products ORDER BY quantity DESC ASC 3
+
+SELECT count(*), extract('years' from age(birthday)) AS age FROM users GROUP BY age ORDER BY age
+
+----------------------------
+ ---HAVING
+
+SELECT count(*), extract('years' from age(birthday)) AS age FROM users GROUP BY age HAVING count(*) >= 10 ORDER BY age 
+
+SELECT sum(quantity), brand FROM products GROUP BY brand HAVING sum(quantity) > 13000
+
+SELECT product_id, sum(quantity) FROM orders_to_products GROUP BY product_id HAVING sum(quantity) > 50
 ----------------------------
 
+ --- Users order
+  SELECT count(*), u.* FROM orders AS u JOIN orders AS o ON u.id = o.customer_id GROUP BY u.id;
+
+  SELECT * FROM users AS u LEFT JOIN orders AS o ON u.id = o.customer_id WHERE o.customer_id IS NULL;
+
+
+ CREATE TABLE A ( v char(3), t int);
+ CREATE TABLE B (v char(3));
+DROP TABLE b
+ INSERT INTO a VALUES
+ ('XXX', 1),
+ ('XXY', 2),
+ ('XXZ', 1),
+ ('YZX', 3),
+ ('XZX', 2),
+ ('ZYX', 2),
+ ('YZY', 3),
+ ('ZZX', 3),
+ ('YZZ', 2);
+
+ INSERT INTO b VALUES
+ ('ZXX'),('XZY'),('YXZ'),('YXY'),('YZZ');
+
+ SELECT * FROM a, b;
+ SELECT * FROM A JOIN B ON A.v = B.v
+
+
+-----------------------------
  Alias
 
 SELECT fist_name AS "Им'я", last_name AS "Фамилия", id AS "Номер" FROM users;
@@ -39,7 +172,32 @@ SELECT gender, min(extract('years' from age(birthday))), max(extract('years' fro
 SELECT gender, count(id) FROM users GROUP BY gender;
 
 --------------------
-   
+   Practice 
+ CREATE TABLE workers(
+    id serial PRIMARY KEY,
+    name varchar(64),
+    salary int,
+    birthday date
+ );
+ 
+ INSERT INTO workers (name, salary, birthday) VALUES 
+ ('Oleg', 300, '1995-02-25');
+ 
+ INSERT INTO workers (name, salary, birthday) VALUES 
+ ('Jaroslava', 350, '1992-09-13');
+ 
+ INSERT INTO workers (name, salary, birthday) VALUES
+ ('Sasha',1000,'1996-05-25'),
+ ('Masha',200,'1997-04-11');
+
+ SELECT * FROM workers;
+UPDATE workers SET salary = 500 WHERE id = 1;
+UPDATE workers SET salary = 400 WHERE salary > 500;
+SELECT id, name FROM workers WHERE id = 4;
+
+SELECT count(*), brand FROM products GROUP BY brand;
+
+------------------------------------------------- 
 
 INSERT INTO users (fist_name, last_name, email, is_subscribe) VALUES
     ('Sron', 'Man', 'Sonystark@mail.com', true);
