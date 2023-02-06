@@ -31,6 +31,7 @@ SELECT  id, create_at, customer_id, (
     WHEN 12 THEN 'winder'
     ELSE 'unkown'
  END   
+<<<<<<< HEAD
 ) FROM users;
 
  SELECT *, (CASE gender
@@ -67,3 +68,6 @@ FROM users AS u
 JOIN orders AS o
 ON u.id = o.customer_id
 GROUP BY u.id, u.fist_name, u.last_name, u.email;
+=======
+) FROM users;
+>>>>>>> db400e4afa085c9f6018c409607afa6566fd10fb
