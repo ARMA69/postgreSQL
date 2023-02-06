@@ -68,6 +68,28 @@ FROM users AS u
 JOIN orders AS o
 ON u.id = o.customer_id
 GROUP BY u.id, u.fist_name, u.last_name, u.email;
-=======
-) FROM users;
->>>>>>> db400e4afa085c9f6018c409607afa6566fd10fb
+
+-----------------
+   ---1
+SELECT count(*) FROM products WHERE price > 3000;
+ 
+   ----2
+
+SELECT sum(
+  CASE WHEN price > 3000 THEN 1
+  ELSE 0
+  END
+)
+FROM products
+
+    
+  -------------------------------
+
+   ---COALESCE
+
+UPDATE products
+SET description = 'Супер телефон з довгим описом'
+WHERE id BETWEEN 1 AND 250;
+
+SELECT id, model, price, COALESCE(description, 'Про цей товар нічого не відомо')
+FROM products;
