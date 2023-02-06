@@ -1,4 +1,14 @@
+SELECT * FROM users WHERE gender IS NULL;
+
+ALTER TABLE orders ADD COLUMN status boolean;
+
+UPDATE orders SET status = true WHERE id % 2 = 0;
+UPDATE orders SET status = false WHERE id % 2 = 1;
+
+SELECT id, create_at, customer_id, status AS order_status FROM orders ORDER BY id; ---alias for attribute              
+              
             04.02.2023
+
              ----1NF
 CREATE TABLE employees(
     id serial PRIMARY KEY,
@@ -7,6 +17,7 @@ CREATE TABLE employees(
     position varchar(300),
     car_aviability boolean
 );
+
  INSERT INTO employees(name,position,car_aviability) VALUES
   ('John', 'HR', false),
   ('Alex', 'Saler', true),
