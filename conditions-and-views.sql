@@ -1,5 +1,54 @@
     07.02.2023
 
+
+-----------views
+
+CREATE VIEW users_with_orders_amout AS (
+SELECT u.*, count(o.id) AS "orders_amount" 
+FROM users AS u
+LEFT JOIN orders AS o
+ON u.id = o.customer_id
+GROUP BY u.id, u.email
+ORDER BY "orders_amount"
+);
+
+SELECT * FROM users_with_orders_amout;
+
+SELECT email FROM users_with_orders_amout
+WHERE orders_amount = 1;
+
+
+CREATE OR REPLACE VIEW users_with_orders_amout AS (
+SELECT u.*, count(o.id) AS "orders_amount" 
+FROM users AS u
+LEFT JOIN orders AS o
+ON u.id = o.customer_id
+GROUP BY u.id, u.email
+ORDER BY "orders_amount"
+);
+
+CREATE VIEW orders_with_price AS (
+    SELECT o.id, o.customer_id, sum(p.price * otp.quantity) AS "order_sum", o.status
+    FROM orders AS o
+    JOIN orders_to_products AS otp
+    ON o.id = otp.order_id
+    JOIN products AS p
+    ON p.id = otp.product_id
+    GROUP BY o.id
+);
+
+SELECT * FROM orders_with_price;
+
+SELECT u.id, u.email, sum(owp.order_sum) AS sum_amount
+FROM users AS u
+JOIN orders_with_price AS owp
+ON u.id = owp.customer_id
+GROUP BY u.id
+ORDER BY sum_amount DESC
+LIMIT 10;
+
+
+
     ---EXISTS
 
  ---IN, NOT IN, SOME, ANY, EXISTS, ALL
