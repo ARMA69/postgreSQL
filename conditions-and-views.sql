@@ -1,3 +1,25 @@
+      8.02.2023
+
+      ------ ENUM
+
+SELECT * FROM orders WHERE status = true;
+
+CREATE TYPE order_status AS ENUM ('new', 'processing', 'shiped', 'done');
+
+ALTER TABLE orders ALTER COLUMN status TYPE order_status
+USING(
+  CASE status 
+  WHEN false THEN 'processing'
+  WHEN true THEN 'done'
+  ELSE 'new'
+  END
+)::order_status;
+
+INSERT INTO orders(customer_id, status) VALUES
+(4, 'new');
+
+SELECT * FROM orders ORDER BY create_at DESC;
+
     07.02.2023
 
 
