@@ -1,5 +1,39 @@
       8.02.2023
--------- SCHEMA
+------------ Practice
+
+    CREATE SCHEMA practice;
+
+    CREATE TABLE practice.users(
+      login VARCHAR(16),
+      email VARCHAR(25),
+      password VARCHAR(16) 
+    );
+
+    CREATE TABLE practice.employees(
+      salary int,
+      department VARCHAR(50),
+      position VARCHAR(50),
+      here_date date DEFAULT current_date,
+      name VARCHAR(50)
+    );
+    
+    ALTER TABLE practice.users ADD PRIMARY KEY(email);
+
+    ALTER TABLE practice.employees ADD CoLUMN id serial PRIMARY KEY; 
+
+    CREATE TABLE practice.positions(
+      id serial PRIMARY KEY,
+      department VARCHAR(50),
+      position VARCHAR(50)
+    );
+ 
+  ALTER TABLE practice.employees DROP COLUMN position;
+  ALTER TABLE practice.employees DROP COLUMN department;
+
+  ALTER TABLE practice.employees ADD COLUMN position_id int REFERENCES practice.positions(id);
+
+
+  
 
  CREATE SCHEMA newtask;
 
