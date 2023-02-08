@@ -1,4 +1,11 @@
       8.02.2023
+-------- SCHEMA
+
+ CREATE SCHEMA newtask;
+
+ CREATE TABLE newtask.users(
+  ........
+ )
 
       ------ ENUM
 
